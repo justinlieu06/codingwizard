@@ -1,0 +1,37 @@
+* { margin:0; padding:0; }
+
+html, body { 
+  background-color:black; 
+  height:100%; 
+  position:relative; 
+  width:100%; 
+}
+
+canvas { 
+  height: 100%;
+  width: 100%;
+  /* position: fixed; */
+}
+
+/* .gameCanvas {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+} */
+
+h1, h2, h3, h4, h5, p {
+  color: white;
+  text-align: center;
+  font-family: luminari;
+}
+
+/* .overview-left {
+  width: 200px;
+  background-color: purple;
+}
+
+.overview-right {
+  width: 200px;
+  background-color: blue;
+  float: right;
+} */

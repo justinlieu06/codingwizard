@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width=device-width">
+    <title>Coding Wizard</title>
+    <link rel="stylesheet" type="text/css" href="css/game.css" media="screen" />
+
+    //GAME ENTITIES
+    <script src="js/player.js"></script>
+    <script src="js/viewport.js"></script>
+    <script src="js/bug.js"></script>
+
+  </head>
+  <body>
+    <h1>Coding Wizard</h1>
+    <h3>By Justin Lieu</h3>
+    <div class="gameCanvas"><canvas></canvas></div>
+    <div class="overview-left">
+      <h3>Instructions:</h3>
+      <h5>Controls:</h5>
+      <p>Use WASD to move up, left, down, and right respectively.</p>
+    </div>
+    <div class="overview-right">
+        <h3>Instructions:</h3>
+        <h5>Controls:</h5>
+        <p>Use WASD to move up, left, down, and right respectively.</p>
+      </div>
+
+    <script type = "text/javascript">
+
+      let playerSpeed = 5;
+      let scaled_size = 48;
+      let sprite_size = 16;
+      
+      // let map =[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+      //           3,2,1,1,0,0,3,3,3,2,1,0,3,0,0,0,3,0,0,1,2,2,2,3,
+      //           3,1,1,0,0,0,3,3,3,1,0,0,3,0,2,0,3,0,1,1,2,1,1,3,
+      //           3,0,0,0,0,0,3,3,2,0,0,0,3,0,0,0,3,1,2,2,2,1,1,3,
+      //           3,1,1,0,0,0,3,1,1,0,0,0,3,3,3,0,1,1,2,2,1,0,0,3,
+      //           3,0,0,1,2,1,3,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,3,
+      //           3,0,1,2,2,1,3,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,3,
+      //           3,0,0,1,1,1,3,1,1,1,0,1,0,0,0,3,0,0,3,3,3,0,0,3,
+      //           3,0,0,0,1,1,3,3,3,3,3,3,3,3,3,3,0,0,3,3,3,3,3,3,
+      //           3,3,0,3,3,3,3,3,3,3,3,1,0,0,0,3,0,0,3,3,3,2,1,3,
+      //           3,3,1,0,0,1,3,3,3,3,3,0,0,0,0,0,0,1,1,0,1,1,0,3,
+      //           3,3,3,3,1,1,3,3,3,3,3,1,0,0,0,0,1,1,2,2,1,0,0,3,
+      //           3,3,3,3,0,1,0,0,3,3,1,0,0,1,1,2,1,2,0,1,2,1,0,3,
+      //           3,2,3,0,0,0,1,0,1,1,0,0,1,0,0,2,1,2,2,1,2,1,1,3,
+      //           3,1,1,1,0,0,0,0,1,1,0,0,0,1,1,0,2,1,1,1,2,0,1,3,
+      //           3,1,1,1,1,1,0,1,3,3,1,0,0,0,1,1,1,2,2,2,1,1,2,3,
+      //           3,0,0,0,1,0,1,1,3,3,1,0,0,0,0,1,0,1,1,1,1,1,1,3,
+      //           3,1,1,0,0,0,0,3,3,3,1,1,2,2,0,0,3,3,3,3,3,3,3,3,
+      //           3,0,1,0,1,0,1,3,3,3,3,2,2,2,2,1,3,1,0,0,0,0,1,3,
+      //           3,1,0,0,0,1,3,3,3,2,1,0,1,2,0,1,0,0,0,1,1,0,0,3,
+      //           3,2,0,0,0,0,3,3,3,3,1,1,0,1,1,0,3,0,1,2,2,1,0,3,
+      //           3,3,1,0,1,1,3,3,3,3,3,3,0,0,1,1,3,0,0,1,1,0,0,3,
+      //           3,3,1,1,2,3,3,3,3,3,3,3,1,0,1,2,3,1,0,0,0,0,1,3,
+      //           3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3];
+      // let map = new Array(10000).fill(1).map(() => (
+      //   Math.floor(Math.random() * 10)
+      // ));
+      // let map = new Array(10000).fill(1).map(() => (
+      //   Math.floor(Math.random() * 3) + 7
+      // ));
+      let map = new Array(576).fill(1).map(() => {
+        return Math.floor(Math.random() * 3)
+      });
+      
+      let columns = Math.sqrt(map.length);
+      let rows = Math.sqrt(map.length);
+      let context = document.querySelector("canvas").getContext("2d");
+
+      let height = document.documentElement.clientHeight;
+      let width = document.documentElement.clientWidth;
+      
+      let viewportSize = 500;
+      let viewport = new Viewport(200, 200, viewportSize, viewportSize, playerSpeed);
+      let player = new Player(width * 0.45, height * 0.5, playerSpeed);
+      let playerCenter = 0;
+      let bugArray = [];
+
+      //CENTER MAP: map x and y coordinates are set so map is centered based off of browser dimensions
+      let mapXCoor = width * 0.5 - viewport.width * 0.5;
+      // let mapYCoor = height * 0.5 - viewport.height * 0.5;
+      let mapYCoor = 50;
+
+      //create bugs with random locations
+      // for (let i = 0; i < columns; i++){
+      //   for (let j = 0; j < rows; j++){
+      //     let tile_x_coor = Math.floor(i * scaled_size - viewport.x + mapXCoor);
+      //     let tile_y_coor = Math.floor(j * scaled_size - viewport.y + mapYCoor);
+      //     let rand = Math.floor(Math.random() * 10);
+      //     if (rand === 5){
+      //       bugArray.push(new Bug(tile_x_coor, tile_y_coor, playerSpeed));
+      //       // bugArray.push(new Bug(tile_x_coor, tile_y_coor, 4));
+      //     }
+      //   }
+      // }
+      let tile_x_coor = Math.floor(3 * scaled_size - viewport.x + mapXCoor);
+      let tile_y_coor = Math.floor(3 * scaled_size - viewport.y + mapYCoor);
+      bugArray.push(new Bug(tile_x_coor, tile_y_coor, playerSpeed));
+      //////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+      //LOOP////////////////////////
+      function loop(){
+        window.requestAnimationFrame(loop);
+
+        context.canvas.height = height;
+        context.canvas.width = width;
+        // context.fillStyle = "#008000";
+        context.fillRect(0, 0, width, height);
+
+        context.imageSmoothingEnabled = false;
+      
+        let leftMapEdge = Math.floor(viewport.x / scaled_size);
+        let topMapEdge = Math.floor(viewport.y / scaled_size);
+        let rightMapEdge = Math.ceil((viewport.x + viewport.width) / scaled_size);
+        let bottomMapEdge = Math.ceil((viewport.y + viewport.height) / scaled_size);
+
+        //DRAW MAP//
+        //prevent map from repeating
+        if (leftMapEdge < 0) leftMapEdge = 0;
+        if (topMapEdge < 0) topMapEdge = 0;
+        if (rightMapEdge > columns) rightMapEdge = columns;
+        if (bottomMapEdge > rows) bottomMapEdge = rows;
+
+        for (let i = leftMapEdge; i < rightMapEdge; i++){
+          for (let j = topMapEdge; j < bottomMapEdge; j++){
+            let mapNumber = map[j * columns + i];
+            
+            let tile_x_coor = Math.floor(i * scaled_size - viewport.x + mapXCoor);
+            let tile_y_coor = Math.floor(j * scaled_size - viewport.y + mapYCoor);
+            
+            context.drawImage(tile_sprites, 0, mapNumber * sprite_size, sprite_size, sprite_size, 
+              tile_x_coor, tile_y_coor, scaled_size, scaled_size);
+
+            //DRAW BUGS//
+            for (let i = 0; i < bugArray.length; i++){
+              console.log("X:");
+              console.log(bugArray[i].x);
+              console.log("Y:");
+
+              console.log(bugArray[i].y);
+              if (bugArray[i].x === tile_x_coor && bugArray[i].y === tile_y_coor){
+                context.drawImage(bug_sprites, 0, 0, sprite_size, sprite_size, bugArray[i].x, bugArray[i].y,
+                scaled_size, scaled_size);
+              }
+            }
+            
+          }
+        }
+
+
+        //CHANGE MAP//
+        let playerXCenter = Math.floor((player.x + scaled_size * 0.5) / scaled_size);
+        let playerYCenter = Math.floor((player.y + scaled_size * 0.5) / scaled_size) * columns;
+        playerCenter = playerXCenter + playerYCenter;
+        
+        if (map[playerCenter] === 0) map[playerCenter] = 1;
+
+        for (let i = 0; i < bugArray.length; i++){
+          let currentBug = bugArray[i];
+          
+          bugCenter = currentBug.x + currentBug.y;
+          if (map[playerCenter] === bugCenter) currentBug.speed = 10;
+        }
+        
+        //DRAW PLAYER//
+        let playerXCoor = Math.round(player.x - viewport.x + mapXCoor);
+        let playerYCoor = Math.round(player.y - viewport.y + mapYCoor);
+
+        context.drawImage(wizard_sprites, 0, 0, sprite_size, sprite_size, playerXCoor, playerYCoor,
+          scaled_size, scaled_size);
+
+        //draw viewport
+
+        context.strokeStyle = "#ffffff";
+        
+        context.rect(mapXCoor, mapYCoor, viewport.width, viewport.height);
+        context.stroke();
+      }
+      //////////////////////////////////////////////////
+
+
+
+
+
+
+
+      //SPRITES//////////////////////////////
+      let tile_sprites = new Image();
+      tile_sprites.src = "sprites/terrain.png";
+
+      tile_sprites.addEventListener("load", (event) => {
+        loop();
+      });
+
+      let wizard_sprites = new Image();
+      wizard_sprites.src = "sprites/wizard.png";        
+
+      let bug_sprites = new Image();
+      bug_sprites.src = "sprites/bugs.png";  
+      ////////////////////////////////////////////
+
+
+
+
+
+
+      //CONTROLS///////////////////////////////////
+      function masterControls(e){
+        player.move(e);
+        viewport.move(e);
+        for (let i = 0; i < bugArray.length; i++){
+          bugArray[i].move(e);
+        }
+      }
+      document.onkeydown = masterControls;
+      //////////////////////////////////////////////////
+    </script>
+  </body>
+</html>
