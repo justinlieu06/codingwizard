@@ -15,36 +15,34 @@
 
   </head>
   <body onload="loop()">
-    <h1>Coding Wizard</h1>
-    <h3>By Justin Lieu</h3>
     <div class="icons">
       <a href="https://www.linkedin.com/in/justin-lieu-024744150/" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
       <a href="https://github.com/JustinLieu06/codingwizard" target="_blank"><i class="fa fa-github fa-2x"></i></a>
       <a href="https://angel.co/justin-lieu?public_profile=1" target="_blank"><i class="fa fa-angellist fa-2x"></i></a>
     </div>
-
+    <br />
+    <h1>Coding Wizard</h1>
+    <br />    
     <div class="score">
       <span>Score:</span>
       <span id="score">0</span>
     </div>
     <div class="gameCanvas"><canvas></canvas></div>
-    <div>
-      <h2>Instructions:</h2>
-      <h4>Controls:</h4>
+    <div class="footer">
+      <h3>Overview:</h3>
+      <p>You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</p>
+      <h3>Controls:</h3>
       <ul>
         <li>Use WASD to move the wizard up, left, down, and right respectively.</li>
         <li> Click to cast a fireball spell.</li>
         <li>Your spell's direction are based off of where you click in relation to the wizard.</li>
       </ul>
-      <h4>Scoring:</h4>
+      <h3>Scoring:</h3>
       <ul>
         <li>Changing a tile increases the score.</li>
         <li>Killing a bug increases the score</li>
         <li>Having a bug reach you decreases the score.</li>
       </ul>
-      <h4>Overview:</h4>
-      <p>You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</p>
-    
     </div>
 
     <script type = "text/javascript">
@@ -68,7 +66,7 @@
       let score = 0;
       let scoreDiv = document.getElementById("score");
       let playerSpeed = 5;
-      let scaledSize = 36;
+      let scaledSize = 44;
       let spriteSize = 16;
       
       let map =[7,7,7,8,8,7,7,7,8,7,8,7,7,8,8,7,8,7,8,7,8,7,8,7,7,8,7,8,7,8,7,8,7,8,7,8,7,7,8,7,8,7,8,7,8,7,8,7,8,7,
@@ -132,7 +130,7 @@
       let rows = Math.sqrt(map.length);
       let context = document.querySelector("canvas").getContext("2d");
 
-      let height = document.documentElement.clientHeight * 0.7;
+      let height = document.documentElement.clientHeight * 0.8;
       let width = document.documentElement.clientWidth;
       
       let viewportSize = 400;
@@ -173,16 +171,23 @@
 
 
 
+
+      
+
+
+
+
       //LOOP////////////////////////
       function loop(){
         window.requestAnimationFrame(loop);
 
         context.canvas.height = height;
         context.canvas.width = width;
-        context.fillStyle = "#008000";
+        // context.fillStyle = "#008000";
         context.fillRect(0, 0, width, height);
 
         context.imageSmoothingEnabled = false;
+
       
         let leftMapEdge = Math.floor(viewport.x / scaledSize);
         let topMapEdge = Math.floor(viewport.y / scaledSize);
