@@ -10,23 +10,23 @@ class Player {
   move(e){
     if (e.key === 'w'){
       this.y -= this.speed;
-      // this.spriteX = 2;
-      // this.spriteY = 0;
+      this.spriteX = 2;
+      this.spriteY = 0;
     }
     if (e.key === 's'){
       this.y += this.speed;
-      // this.spriteX = 2;
-      // this.spriteY = 2;
+      this.spriteX = 2;
+      this.spriteY = 2;
     }
     if (e.key === 'a'){
       this.x -= this.speed;
-      // this.spriteX = 1;
-      // this.spriteY = 0;
+      this.spriteX = 1;
+      this.spriteY = 0;
     }
     if (e.key === 'd'){
       this.x += this.speed;
-      // this.spriteX = 3;
-      // this.spriteY = 0;
+      this.spriteX = 3;
+      this.spriteY = 0;
     }
     // if (e.key === 'q'){
     //   this.x -= this.speed;
