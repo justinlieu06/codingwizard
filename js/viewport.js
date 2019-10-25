@@ -5,24 +5,44 @@ class Viewport {
     this.width = w;
     this.height = h;
     this.speed = speed;
+    this.up = false;
+    this.down = false;
+    this.left = false;
+    this.right = false;
   }
 
-  move(e){
+  keyListener(e){
+    let key_state = event.type === "keydown" ? true : false;
     if (e.key === 'w'){
-      this.y -= this.speed;
+      viewport.up = key_state;
     }
     if (e.key === 's'){
-      this.y += this.speed;
+      viewport.down = key_state;
+      
     }
     if (e.key === 'a'){
-      this.x -= this.speed;
+      viewport.left = key_state;
+      
     }
     if (e.key === 'd'){
-      this.x += this.speed;
-    }
-    if (e.key === 'q'){
-      this.x -= this.speed;
-      this.y -= this.speed;
+      viewport.right = key_state;
+      
     }
   }
+
+  move(){
+    if (viewport.up) {
+      this.y -= this.speed;
+    }
+    if (viewport.down) {
+      this.y += this.speed;
+    }
+    if (viewport.left){
+      this.x -= this.speed;
+    }
+    if (viewport.right){
+      this.x += this.speed;
+    }
+  }
+
 }

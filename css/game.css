@@ -13,16 +13,12 @@ canvas {
   /* position: fixed; */
 }
 
-/* .gameCanvas {
-  height: 100%;
-  width: 100%;
-  position: fixed;
-} */
-
-h1, h2, h3, h4, h5, p, div, span {
+h1, h2, h3, h4, h5, p, div, span, a {
   color: white;
   text-align: center;
   font-family: luminari;
+  user-select: none;
+
 }
 
 li, p {
@@ -30,7 +26,7 @@ li, p {
   list-style-type: none;
 }
 
-.fa-github, .fa-linkedin, .fa-angellist {
+.fa-github, .fa-linkedin, .fa-angellist, .fa-arrow-circle-down {
   color: white;
 }
 
@@ -46,7 +42,33 @@ li, p {
   margin: auto;
 }
 
-.footer {
-  width: 40%;
-  margin: auto;
+.instructions {
+  display: none;
+  width: 300px;
+  /* transform: translate(0px, -540px); */
+  z-index: 10;
+  position: absolute;
+  border: solid 1px white;
 }
+
+.hover-inner {
+  padding-bottom: 20px;
+}
+
+#inst {
+  text-align: left;
+  font-size: 14px;
+}
+
+.hover:hover .instructions {
+  display: block;
+}
+
+.hover {
+  transform: translate(80px, -580px); 
+  width: 175px;
+}
+
+/* .gameCanvas {
+  cursor: pointer;
+} */

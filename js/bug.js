@@ -1,31 +1,53 @@
 class Bug {
-  constructor(x, y, speed, bugSpriteNum){
+  constructor(x, y, speed, bugSpriteNum, playerSpeed, velocityX, velocityY){
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.bugSpriteNum = bugSpriteNum;
-    this.velocityX = 1;
-    this.velocityY = 1;
+    this.velocityX = velocityX;
+    this.velocityY = velocityY;
+    this.up = false;
+    this.down = false;
+    this.left = false;
+    this.right = false;
+    this.playerSpeed = playerSpeed;
   }
 
-  move(e){
+  keyListener(e){
+    let key_state = event.type === "keydown" ? true : false;
     if (e.key === 'w'){
-      this.y += this.speed;
+      bug.up = key_state;
     }
     if (e.key === 's'){
-      this.y -= this.speed;
+      bug.down = key_state;
+      
     }
     if (e.key === 'a'){
-      this.x += this.speed;
+      bug.left = key_state;
+      
     }
     if (e.key === 'd'){
-      this.x -= this.speed;
-    }
-    if (e.key === 'q'){
-      this.x += this.speed;
-      this.y += this.speed;
+      bug.right = key_state;
+      
     }
   }
+
+  move(){
+    if (viewport.up) {
+      this.y += this.playerSpeed;
+    }
+    if (viewport.down) {
+      this.y -= this.playerSpeed;
+    }
+    if (viewport.left){
+      this.x += this.playerSpeed;
+    }
+    if (viewport.right){
+      this.x -= this.playerSpeed;
+    }
+  }
+
+ 
 
   updateRand(bugRandDir, bugRandDist){
     if (bugRandDir === 1){

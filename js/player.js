@@ -5,47 +5,52 @@ class Player {
     this.speed = speed;
     this.spriteX = spriteX;
     this.spriteY = spriteY;
+    this.up = false;
+    this.down = false;
+    this.left = false;
+    this.right = false;
   }
 
-  move(e){
+  keyListener(e){
+    let key_state = event.type === "keydown" ? true : false;
     if (e.key === 'w'){
+      player.up = key_state;
+    }
+    if (e.key === 's'){
+      player.down = key_state;
+      
+    }
+    if (e.key === 'a'){
+      player.left = key_state;
+      
+    }
+    if (e.key === 'd'){
+      player.right = key_state;
+      
+    }
+  }
+
+  move(){
+    if (player.up) {
       this.y -= this.speed;
       this.spriteX = 2;
       this.spriteY = 0;
     }
-    if (e.key === 's'){
+    if (player.down) {
       this.y += this.speed;
       this.spriteX = 2;
       this.spriteY = 2;
     }
-    if (e.key === 'a'){
+    if (player.left){
       this.x -= this.speed;
       this.spriteX = 1;
       this.spriteY = 0;
     }
-    if (e.key === 'd'){
+    if (player.right){
       this.x += this.speed;
       this.spriteX = 3;
       this.spriteY = 0;
     }
-    // if (e.key === 'q'){
-    //   this.x -= this.speed;
-    //   this.y -= this.speed;
-    // }
-    // if (e.key === 'e'){
-    //   this.x += this.speed;
-    //   this.y -= this.speed;
-    // }
-    // if (e.key === 'z'){
-    //   this.x -= this.speed;
-    //   this.y += this.speed;
-    // }
-    // if (e.key === 'c'){
-    //   this.x += this.speed;
-    //   this.y += this.speed;
-    // }
-    if (e.shiftKey){
-      this.speed += 5;
-    }
   }
+
 }

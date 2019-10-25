@@ -27,23 +27,28 @@
       <span>Score:</span>
       <span id="score">0</span>
     </div>
+    
     <div class="gameCanvas"><canvas></canvas></div>
-    <div class="footer">
+    <div class="hover"><div class="hover-inner"><i class="fa fa-arrow-circle-down"></i> INSTRUCTIONS <i class="fa fa-arrow-circle-down"></i></div>
+    <div class="instructions">
       <h3>Overview:</h3>
-      <p>You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</p>
+      <hr />
+      <div id="inst">You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</div>
       <h3>Controls:</h3>
-      <ul>
-        <li>Use WASD to move the wizard up, left, down, and right respectively.</li>
-        <li>Click to cast a fireball spell.</li>
-        <li>Your spell's direction are based off of where you click in relation to the wizard.</li>
-        <!-- <li>Use QEZC to move diagonally.</li> -->
-      </ul>
+      <hr />
+      <div id="inst">Press WASD to move the wizard up, left, down, and right respectively.</div>
+      <br />
+      <div id="inst">Click to cast a fireball spell.</div>
+      <br />
+      <div id="inst">Your spell's direction are based off of where you click in relation to the wizard.</div>
       <h3>Scoring:</h3>
-      <ul>
-        <li>Changing a tile increases the score.</li>
-        <li>Killing a bug increases the score</li>
-        <li>Having a bug reach you decreases the score.</li>
-      </ul>
+      <hr />
+      <div id="inst">Changing a tile increases the score.</div>
+      <br />
+      <div id="inst">Killing a bug increases the score</div>
+      <br />
+      <div id="inst">Having a bug reach you decreases the score.</div>
+    </div>
     </div>
 
     <script type = "text/javascript">
@@ -69,7 +74,7 @@
 
       let score = 0;
       let scoreDiv = document.getElementById("score");
-      let playerSpeed = 5;
+      let playerSpeed = 3;
       let scaledSize = 44;
       let spriteSize = 16;
       
@@ -157,18 +162,37 @@
         for (let j = 0; j < rows; j++){
           let tileXCoor = Math.floor(i * scaledSize - viewport.x + mapXCoor);
           let tileYCoor = Math.floor(j * scaledSize - viewport.y + mapYCoor);
-          let rand = Math.floor(Math.random() * 10);
+          let rand = Math.floor(Math.random() * 80);
           let bugSpriteRand = Math.floor(Math.random() * 4);
-          let bugSpeedRand = Math.random() / 2.0;
-          if (rand === 5){
-            bugArr.push(new Bug(tileXCoor, tileYCoor, bugSpeedRand, bugSpriteRand));
+          // let bugSpeedRand = Math.random() / 2.0;
+          let bugSpeedRand = 0.4;
+          if (rand === 1){
+            bugArr.push(new Bug(tileXCoor, tileYCoor, bugSpeedRand, bugSpriteRand, playerSpeed, 1, 1));
           }
         }
       }
 
       //////////////////////////////////////////////////
 
+      function respawnBug(){
+        let xOrY = Math.floor(Math.random() * 2);
+        let randI;
+        let randJ;
+        if (xOrY){
+          randI = 0;
+          randJ = Math.floor(Math.random() * rows);
+        } else {
+          randI = Math.floor(Math.random() * columns);
+          randJ = 0;
+        }
+        let tileXCoor = Math.floor(randI * scaledSize - viewport.x + mapXCoor);
+        let tileYCoor = Math.floor(randJ * scaledSize - viewport.y + mapYCoor);
+        
+        let bugSpriteRand = Math.floor(Math.random() * 4);
+        let bugSpeedRand = 0.4;
 
+        bugArr.push(new Bug(tileXCoor, tileYCoor, bugSpeedRand, bugSpriteRand, 1, 1));
+      }
 
 
 
@@ -191,7 +215,13 @@
         context.fillRect(0, 0, width, height);
 
         context.imageSmoothingEnabled = false;
-
+        //MOVE ENTITIES//
+        player.move();
+        viewport.move();
+        for (let i = 0; i < bugArr.length; i++){
+          bugArr[i].move();
+        }
+        //
       
         let leftMapEdge = Math.floor(viewport.x / scaledSize);
         let topMapEdge = Math.floor(viewport.y / scaledSize);
@@ -250,8 +280,16 @@
             score -= 10;
             scoreDiv.innerHTML = score;
             bugArr.splice(i, 1);
+            //spawn new bug
+            respawnBug();
           }
-          
+          // if (bugXCenter.x === playerXCenter && bugYCenter === playerYCenter){
+          //   score -= 10;
+          //   scoreDiv.innerHTML = score;
+          //   bugArr.splice(i, 1);
+          //   //spawn new bug
+          //   respawnBug();
+          // }
         }
 
         //ADD TO SCORE IF FIREBALL KILLS BUG//
@@ -267,6 +305,7 @@
             let fireballXCenter = Math.floor((currentFireball.x + scaledSize * 0.5) / scaledSize);
             let fireballYCenter = Math.floor((currentFireball.y + scaledSize * 0.5) / scaledSize) * columns;
             if (fireballXCenter === bugXCenter && fireballYCenter === bugYCenter){
+              //kill bug
               bugArr.splice(i, 1);
               score += 2;
               scoreDiv.innerHTML = score;
@@ -274,6 +313,8 @@
               context.drawImage(fireballSprites, 2 * spriteSize, 0, spriteSize, 
                 spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
               fireballArr.splice(j, 1);
+              //spawn new bug
+              respawnBug();
             }
           }
         }
@@ -384,15 +425,18 @@
 
 
 
-      //CONTROLS///////////////////////////////////
-      function masterControls(e){
-        player.move(e);
-        viewport.move(e);
-        for (let i = 0; i < bugArr.length; i++){
-          bugArr[i].move(e);
-        }
+      //ADD KEY LISTENERS///////////////////////////////////
+
+      window.addEventListener("keydown", player.keyListener);
+      window.addEventListener("keyup", player.keyListener);
+      window.addEventListener("keydown", viewport.keyListener);
+      window.addEventListener("keyup", viewport.keyListener);
+      for (let i = 0; i < bugArr.length; i++){
+        window.addEventListener("keydown", bugArr[i].keyListener);
+        window.addEventListener("keyup", bugArr[i].keyListener);
       }
-      document.onkeydown = masterControls;
+      
+
       //////////////////////////////////////////////////
 
 
