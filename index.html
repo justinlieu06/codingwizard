@@ -213,7 +213,6 @@
         context.canvas.width = width;
         // context.fillStyle = "#008000";
         context.fillRect(0, 0, width, height);
-
         context.imageSmoothingEnabled = false;
         //MOVE ENTITIES//
         player.move();
@@ -417,6 +416,11 @@
             fireballArr.splice(i, 1);
           }
         }
+        context.clearRect(0, 0, width * 0.5 - 201, height);
+        context.clearRect(width * 0.5 + 201, 0, width, height);
+        context.clearRect(0, 0, width, height * 0.5 - 230);
+        context.clearRect(0, height * 0.5 + 172, width, height);
+
       }
       //////////////////////////////////////////////////
 

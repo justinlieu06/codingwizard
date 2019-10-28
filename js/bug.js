@@ -16,18 +16,18 @@ class Bug {
   keyListener(e){
     let key_state = event.type === "keydown" ? true : false;
     if (e.key === 'w'){
-      bug.up = key_state;
+      this.up = key_state;
     }
     if (e.key === 's'){
-      bug.down = key_state;
+      this.down = key_state;
       
     }
     if (e.key === 'a'){
-      bug.left = key_state;
+      this.left = key_state;
       
     }
     if (e.key === 'd'){
-      bug.right = key_state;
+      this.right = key_state;
       
     }
   }

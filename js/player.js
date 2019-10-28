@@ -18,15 +18,12 @@ class Player {
     }
     if (e.key === 's'){
       player.down = key_state;
-      
     }
     if (e.key === 'a'){
       player.left = key_state;
-      
     }
     if (e.key === 'd'){
       player.right = key_state;
-      
     }
   }
 
