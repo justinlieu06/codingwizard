@@ -14,7 +14,7 @@
     <script src="js/fireball.js"></script>
 
   </head>
-  <body onload="loop()">
+  <body>
     <div class="icons">
       <a href="https://www.linkedin.com/in/justin-lieu-024744150/" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
       <a href="https://github.com/JustinLieu06/codingwizard" target="_blank"><i class="fa fa-github fa-2x"></i></a>
@@ -24,6 +24,8 @@
     <h1>Coding Wizard</h1>
     <br />    
     <div class="score">
+      <span>Lives:</span>
+      <span id="lives">4</span>
       <span>Score:</span>
       <span id="score">0</span>
     </div>
@@ -51,6 +53,11 @@
     </div>
     </div>
 
+    <div id="startWrapper">
+      <button type="button" id="startBtn" onclick="loop()">Start</button>
+      <div id="gameOver">Game Over</div>
+    </div>
+
     <script type = "text/javascript">
 
       //SPRITES//////////////////////////////
@@ -73,23 +80,29 @@
 
 
       let score = 0;
+      let lives = 4;
       let scoreDiv = document.getElementById("score");
+      let livesDiv = document.getElementById("lives");
+      let startBtn = document.getElementById("startBtn");
+      let gameOver = document.getElementById("gameOver");
+      gameOver.style.display = "none";
+      let startWrapper = document.getElementById("startWrapper");
       let playerSpeed = 3;
       let scaledSize = 44;
       let spriteSize = 16;
       
       let map =[7,7,7,8,8,7,7,7,8,7,8,7,7,8,8,7,8,7,8,7,8,7,8,7,7,8,7,8,7,8,7,8,7,8,7,8,7,7,8,7,8,7,8,7,8,7,8,7,8,7,
-                7,0,2,2,2,2,0,0,0,0,0,2,0,0,0,0,0,0,10,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
-                8,0,0,0,2,2,0,0,0,2,0,0,2,0,2,0,0,0,10,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
-                7,0,0,0,2,4,4,4,0,0,2,0,2,0,3,0,0,0,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
-                8,0,0,2,4,10,10,4,2,0,2,0,0,0,0,0,0,0,12,10,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+                7,0,2,2,2,2,0,0,0,0,0,2,0,0,0,0,0,0,10,10,10,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+                8,0,0,0,2,2,0,0,0,2,0,0,2,0,2,0,0,0,10,10,10,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,2,2,0,0,0,2,2,0,0,0,0,0,7,
+                7,0,0,0,2,4,4,4,0,0,2,0,2,0,3,0,0,0,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,0,3,0,0,2,0,2,0,0,3,0,0,0,0,7,
+                8,0,0,2,4,10,10,4,2,0,2,0,0,0,0,0,0,0,12,10,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,0,0,0,0,0,0,3,0,0,2,0,0,0,0,8,
                 7,0,0,4,10,10,10,10,4,0,0,0,0,0,3,0,0,0,10,10,10,0,0,0,0,0,3,0,0,2,0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
-                7,0,0,4,4,10,4,4,3,0,3,0,3,0,0,0,0,0,10,12,10,3,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
-                8,0,0,0,4,4,4,4,0,0,0,0,0,0,0,0,0,0,10,10,10,0,2,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
-                7,0,0,0,3,4,3,0,2,0,3,0,0,1,0,0,0,0,10,10,10,3,0,3,1,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
-                7,0,0,0,0,0,0,0,0,0,3,0,1,0,1,1,1,9,9,9,9,9,1,1,2,1,0,0,0,0,0,0,0,3,0,0,0,0,0,3,2,0,3,0,0,0,0,0,0,7,
-                8,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1,3,0,10,10,10,0,0,1,0,3,0,2,0,0,0,0,3,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
-                7,0,0,2,0,0,3,0,0,3,0,0,0,0,0,0,2,0,10,10,10,0,0,0,2,0,3,0,2,0,2,0,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,7,
+                7,0,0,4,4,10,4,4,3,0,3,0,3,0,0,0,0,0,10,12,10,3,0,0,0,0,0,0,0,0,0,0,3,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,7,
+                8,0,0,0,4,4,4,4,0,0,0,0,0,0,0,0,0,0,10,10,10,0,2,0,0,0,0,0,0,0,0,2,0,0,2,0,2,0,0,0,0,0,0,0,2,0,0,0,0,8,
+                7,0,0,0,3,4,3,0,2,0,3,0,0,1,0,0,0,0,10,10,10,3,0,3,1,2,2,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
+                7,0,0,0,0,0,0,0,0,0,3,0,1,0,1,1,1,9,9,9,9,9,1,1,2,1,0,0,0,0,0,0,0,3,0,0,0,2,0,3,2,0,3,0,0,3,0,0,0,7,
+                8,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1,3,0,10,10,10,0,0,1,0,3,0,2,0,0,0,0,3,0,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,8,
+                7,0,0,2,0,0,3,0,0,3,0,0,0,0,0,0,2,0,10,10,10,0,0,0,2,0,3,0,2,0,2,0,2,0,0,0,0,0,0,0,2,0,0,0,0,3,0,0,0,7,
                 7,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,10,10,10,1,0,3,0,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,8,
                 7,0,0,3,0,3,3,0,0,0,0,3,0,0,3,0,0,10,12,10,10,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,10,10,10,10,10,7,
                 8,0,0,0,0,0,0,2,0,0,0,3,2,2,2,0,0,0,10,10,10,10,1,1,0,0,0,0,2,0,0,0,2,2,0,0,0,0,0,0,0,10,10,10,10,10,10,10,10,7,
@@ -197,30 +210,34 @@
 
 
 
-
-
-
       
 
 
 
 
       //LOOP////////////////////////
+      let requestId;
+
       function loop(){
-        window.requestAnimationFrame(loop);
+        requestId = undefined;
+        start();
+        // window.requestAnimationFrame(loop);
+
+        startBtn.style.display = "none";
+        startWrapper.style.display = "none";
 
         context.canvas.height = height;
         context.canvas.width = width;
         // context.fillStyle = "#008000";
         context.fillRect(0, 0, width, height);
         context.imageSmoothingEnabled = false;
+
         //MOVE ENTITIES//
         player.move();
         viewport.move();
         for (let i = 0; i < bugArr.length; i++){
           bugArr[i].move();
         }
-        //
       
         let leftMapEdge = Math.floor(viewport.x / scaledSize);
         let topMapEdge = Math.floor(viewport.y / scaledSize);
@@ -261,7 +278,7 @@
         let playerXCenter = Math.floor((player.x + scaledSize * 0.5) / scaledSize);
         let playerYCenter = Math.floor((player.y + scaledSize * 0.5) / scaledSize) * columns;
         playerCenter = playerXCenter + playerYCenter;
-        
+
         if (map[playerCenter] === 0) {
           map[playerCenter] = 1;
           score += 5;
@@ -278,17 +295,12 @@
           if (currentBug.velocityX === 0 && currentBug.velocityY === 0){
             score -= 10;
             scoreDiv.innerHTML = score;
+            lives -= 1;
+            livesDiv.innerHTML = lives;
             bugArr.splice(i, 1);
             //spawn new bug
             respawnBug();
           }
-          // if (bugXCenter.x === playerXCenter && bugYCenter === playerYCenter){
-          //   score -= 10;
-          //   scoreDiv.innerHTML = score;
-          //   bugArr.splice(i, 1);
-          //   //spawn new bug
-          //   respawnBug();
-          // }
         }
 
         //ADD TO SCORE IF FIREBALL KILLS BUG//
@@ -422,6 +434,29 @@
         context.clearRect(0, 0, width, 50 - 1);
         context.clearRect(0, 50 + 1 + viewport.height, width, height);
 
+        //Game Over
+        if (lives <= 0){
+          gameOver.style.display = "inline";
+          // startBtn.style.display = "inline";
+          startWrapper.style.display = "inline";
+          // scoreDiv.style.display = "none";
+          // livesDiv.style.display = "none";
+          // window.cancelAnimationFrame(loop);
+          stop();
+        }
+      }
+
+      function start() {
+        if (!requestId) {
+          requestId = window.requestAnimationFrame(loop);
+        }
+      }
+
+      function stop() {
+        if (requestId) {
+          window.cancelAnimationFrame(requestId);
+          requestId = undefined;
+        }
       }
       //////////////////////////////////////////////////
 

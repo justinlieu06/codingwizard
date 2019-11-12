@@ -65,8 +65,48 @@ li, p {
 }
 
 .hover {
-  transform: translate(80px, -580px); 
+  top: 200px;
+  left: 100px;
+  position: absolute;
   width: 175px;
+}
+
+#startBtn {
+  left: 150px;
+  top: 150px;
+  position: absolute;
+  height: 50px;
+  width: 100px;
+  font-size: 30px;
+  font-family: luminari;
+  background-color: white;
+  border-radius: 8px;
+}
+
+#startBtn:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+#gameOver {
+  left: 150px;
+  top: 150px;
+  position: absolute;
+  height: 50px;
+  width: 100px;
+  color: white;
+  font-size: 30px;
+  font-family: luminari;
+}
+
+#startWrapper {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  left: calc(50% - 200px);
+  top: calc(50% - 200px + 54px);
+  background-color: black;
+  border: solid 1px white;
 }
 
 /* .gameCanvas {

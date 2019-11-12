@@ -27,7 +27,7 @@ class Player {
     }
   }
 
-  move(){
+  move(){        
     if (player.up) {
       this.y -= this.speed;
       this.spriteX = 2;
