@@ -102,11 +102,11 @@ li, p {
 #startWrapper {
   width: 400px;
   height: 400px;
-  position: absolute;
   left: calc(50% - 200px);
   top: calc(50% - 200px + 54px);
-  background-color: black;
-  border: solid 1px white;
+  position: absolute;
+
+  /* border: solid 1px white; */
 }
 
 /* .gameCanvas {
