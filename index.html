@@ -58,8 +58,11 @@
       <div id="gameOver">Game Over</div>
     </div>
 
-    <script type = "text/javascript">
+    <audio src="sounds/fireball.mp3" id="fireballSound"></audio>
 
+    <script type = "text/javascript">
+      //SOUNDS///////////////////////////////
+      // let fireballSound = document.getElementById(fireballSound);
       //SPRITES//////////////////////////////
       let tileSprites = new Image();
       tileSprites.src = "sprites/terrain2.png";
@@ -87,6 +90,7 @@
       let gameOver = document.getElementById("gameOver");
       gameOver.style.display = "none";
       let startWrapper = document.getElementById("startWrapper");
+
       let playerSpeed = 3;
       let scaledSize = 44;
       let spriteSize = 16;
@@ -177,8 +181,8 @@
           let tileYCoor = Math.floor(j * scaledSize - viewport.y + mapYCoor);
           let rand = Math.floor(Math.random() * 80);
           let bugSpriteRand = Math.floor(Math.random() * 4);
-          // let bugSpeedRand = Math.random() / 2.0;
-          let bugSpeedRand = 0.4;
+          let bugSpeedRand = Math.random() / 1.8 + 0.2;
+          // let bugSpeedRand = 0.4;
           if (rand === 1){
             bugArr.push(new Bug(tileXCoor, tileYCoor, bugSpeedRand, bugSpriteRand, playerSpeed, 1, 1));
           }
@@ -324,6 +328,15 @@
               context.drawImage(fireballSprites, 2 * spriteSize, 0, spriteSize, 
                 spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
               fireballArr.splice(j, 1);
+
+              // let soundFlag = true;
+              // if (soundFlag){
+              //   fireballArr.push(new Fireball(pointer.x, pointer.y, 2, 1));
+              //   fireballSound.pause();
+              //   fireballSound.currentTime = 0;
+              //   fireballSound.play();
+              //   soundFlag = false;
+              // }
               //spawn new bug
               respawnBug();
             }
@@ -482,7 +495,6 @@
 
       context.canvas.addEventListener("click", event => {
         pointer.x = event.pageX - (scaledSize * 0.5);
-        // console.log(event.pageY);
         pointer.y = event.pageY - 143 - (scaledSize * 0.5);
         fireballArr.push(new Fireball(pointer.x, pointer.y, 2, 1));
       })
