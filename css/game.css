@@ -19,7 +19,6 @@ h1, h2, h3, h4, h5, p, div, span, a {
   text-align: center;
   font-family: luminari;
   user-select: none;
-
 }
 
 li, p {
@@ -36,6 +35,7 @@ li, p {
   margin: auto;
   display: flex;
   justify-content: space-between;
+  padding-top: 20px;
 }
 
 .score {
@@ -43,11 +43,25 @@ li, p {
   margin: auto;
 }
 
+#pause {
+  font-family: luminari;
+  width: 55px;
+}
+
+#reset {
+  font-family: luminari;
+  width: 90px;
+  top: 500px;
+  position: absolute;
+}
+
 .instructions {
   display: none;
   width: 300px;
   position: absolute;
+  left: calc(50% - 150px);
   border: solid 1px white;
+  border-radius: 25px;
 }
 
 #inst {
@@ -59,21 +73,21 @@ li, p {
 }
 
 .hover {
-  top: 200px;
-  left: calc(50% - 100px);
+  top: 220px;
+  left: calc(50% - 90px);
   position: absolute;
   width: 175px;
 }
 
 #title {
-  padding-top: 50px;
+  padding-top: 20px;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  color: #7FDBFF;
+  color: #B0E0E6;
 }
 
 #startBtn {
   left: calc(50% - 50px);
-  top: 100px;
+  padding-top: 20px;
   position: absolute;
   height: 50px;
   width: 100px;
@@ -86,12 +100,12 @@ li, p {
 
 #startBtn:hover {
   cursor: pointer;
-  color: lightgrey;
+  /* color: #B0E0E6; */
 }
 
 #gameOver {
-  left: 150px;
-  top: 150px;
+  left: calc(50% - 50px);
+  padding-top: 20px;
   position: absolute;
   height: 50px;
   width: 100px;
@@ -108,6 +122,5 @@ li, p {
   position: absolute;
   background-image: url("../images/wizbackground.jpg");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
-  border: solid 1px pink;
+  background-size: cover;
 }
