@@ -51,31 +51,49 @@ li, p {
 
 #reset {
   font-family: luminari;
-  width: 150px;
-  height: 50px;
+  width: 160px;
+  height: 40px;
   top: 80%;
-  left: calc(50% - 75px);
+  left: calc(50% - 80px);
   position: absolute;
   font-size: 30px;
   color: white;
   background-color: transparent;
   border: none;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
 }
 
-#reset:hover {
+#reset:hover, #menu:hover {
   cursor: pointer;
-  color: #B0E0E6;
 }
 
-#reset:active {
+#reset:active, #menu:active {
   outline: none;
+}
+
+#menu {
+  font-family: luminari;
+  width: 110px;
+  height: 40px;
+  top: 110px;
+  left: calc(50% - 55px);
+  position: absolute;
+  font-size: 30px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
 }
 
 .instructions {
   display: none;
-  width: 300px;
+  width: 500px;
   position: absolute;
-  left: calc(50% - 150px);
+  left: calc(50% - 250px);
   border: solid 1px white;
   border-radius: 25px;
 }
@@ -89,7 +107,7 @@ li, p {
 }
 
 .hover {
-  top: 220px;
+  top: 45%;
   left: calc(50% - 90px);
   position: absolute;
   width: 175px;
@@ -98,12 +116,12 @@ li, p {
 #title {
   padding-top: 20px;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  color: #B0E0E6;
+  font-size: 100px;
 }
 
 #startBtn {
   left: calc(50% - 50px);
-  padding-top: 20px;
+  top: 250px;
   position: absolute;
   height: 50px;
   width: 100px;
@@ -112,6 +130,18 @@ li, p {
   color: white;
   background-color: transparent;
   border: none;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #66D3FA, 0 0 40px #66D3FA, 0 0 50px #66D3FA, 0 0 60px #66D3FA, 0 0 70px #66D3FA;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #D5F3FE, 0 0 40px #D5F3FE, 0 0 50px #D5F3FE, 0 0 60px #D5F3FE, 0 0 70px #D5F3FE, 0 0 80px #D5F3FE;
+  }
 }
 
 #startBtn:hover {

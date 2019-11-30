@@ -30,8 +30,8 @@
         <a href="https://github.com/JustinLieu06/codingwizard" target="_blank"><i class="fa fa-github fa-2x"></i></a>
         <a href="https://angel.co/justin-lieu?public_profile=1" target="_blank"><i class="fa fa-angellist fa-2x"></i></a>
       </div>
-      <h1 id="title">Coding Wizard</h1>
-      <button type="button" id="startBtn" onclick="loop()">Start</button>
+      <div id="title">Coding Wizard</div>
+      <button type="button" id="startBtn" onclick="reset()">Start</button>
       
       <div class="hover" id="hover"><div class="hover-inner"><i class="fa fa-arrow-circle-down"></i> INSTRUCTIONS <i class="fa fa-arrow-circle-down"></i></div>
       <div class="instructions">
@@ -39,12 +39,7 @@
         <div id="inst">You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</div><br />
         <h3>Controls:</h3>
         <div id="inst">Press WASD to move the wizard up, left, down, and right respectively.</div><br />
-        <div id="inst">Click to cast a fireball spell.</div><br />
-        <div id="inst">Your spell's direction are based off of where you click in relation to the wizard.</div><br />
-        <h3>Scoring:</h3>
-        <div id="inst">Changing a tile increases the score.</div><br />
-        <div id="inst">Killing a bug increases the score</div><br />
-        <div id="inst">Having a bug reach you decreases the score and you lose a life. At 0 lives, the game ends</div>
+        <div id="inst">Click to cast a fireball spell.</div>
       </div>
       </div>
       
@@ -57,6 +52,7 @@
         <a href="https://angel.co/justin-lieu?public_profile=1" target="_blank"><i class="fa fa-angellist fa-2x"></i></a>
       </div>
       <div id="fs"><span>Final Score:</span><span id="finalscore">0</span></div>
+      <button onclick="menu()" id="menu">Menu</button>
       <button onclick="reset()" id="reset">Play Again</button>
     </div>
 
@@ -155,7 +151,7 @@
       let viewportHeight = height;
       let viewportWidth = width;
       let viewport = new Viewport(500, 500, viewportWidth, viewportHeight, playerSpeed);
-      let player = new Player(viewport.x + viewport.width * 0.5, viewport.y + viewport.height * 0.4, playerSpeed, 0, 0);
+      let player = new Player(viewport.x + viewport.width * 0.5, viewport.y + viewport.height * 0.5, playerSpeed, 0, 0);
       let playerCenter = 0;
       let bugArr = [];
       let pointer = { 
@@ -175,7 +171,7 @@
             let tileYCoor = Math.floor(j * scaledSize - viewport.y + mapYCoor);
             let rand = Math.floor(Math.random() * 80);
             let bugSpriteRand = Math.floor(Math.random() * 4);
-            let bugSpeedRand = Math.random() / 1.8 + 0.2;
+            let bugSpeedRand = Math.random() / 1.8 + 0.3;
             if (rand === 1){
               bugArr.push(new Bug(tileXCoor, tileYCoor, bugSpeedRand, bugSpriteRand, playerSpeed, 1, 1));
             }
@@ -208,9 +204,7 @@
         requestId = undefined;
         start();
         // window.requestAnimationFrame(loop);
-        startBtn.style.display = "none";
         startWrapper.style.display = "none";
-        hover.style.display = "none";
         context.canvas.height = height;
         context.canvas.width = width;
         // context.fillStyle = "#008000";
@@ -326,10 +320,6 @@
         //UPDATE AND DRAW BUGS
         for (let i = 0; i < bugArr.length; i++){
           let currentBug = bugArr[i];
-          //random bug direction
-          // let bugRandDir = Math.floor(Math.random() * 4) + 1; 
-          // let bugRandDist = Math.floor(Math.random() * 6) + 1;
-          // currentBug.updateRand(bugRandDir, bugRandDist);
           let velX;
           let velY;
           let bugX = Math.floor(currentBug.x);
@@ -445,7 +435,15 @@
             map[i] = 0;
           }
         }
+        viewport.x = 500;
+        viewport.y = 500;
+        player.x = viewport.x + viewport.width * 0.5;
+        player.y = viewport.y + viewport.height * 0.5;
         start();
+      }
+      function menu(){
+        gameOverWrapper.style.display = "none";
+        startWrapper.style.display="inline";
       }
       //////////////////////////////////////////////////
       //ADD KEY LISTENERS///////////////////////////////////

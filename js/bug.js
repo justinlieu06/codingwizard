@@ -47,23 +47,6 @@ class Bug {
     }
   }
 
- 
-
-  updateRand(bugRandDir, bugRandDist){
-    if (bugRandDir === 1){
-      this.x += bugRandDist;
-    }
-    else if (bugRandDir === 2){
-      this.y += bugRandDist;
-    } 
-    else if (bugRandDir === 3){
-      this.y -= bugRandDist;
-    }
-    else {
-      this.x -= bugRandDist;
-    }
-  }
-
   update(bugXDir, bugYDir, velX, velY){
     this.velocityX = velX;
     this.velocityY = velY;
