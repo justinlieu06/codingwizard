@@ -92,7 +92,7 @@
       let startWrapper = document.getElementById("startWrapper");
 
       let playerSpeed = 3;
-      let scaledSize = 44;
+      let scaledSize = 54;
       let spriteSize = 16;
       
       let map =[7,7,7,8,8,7,7,7,8,7,8,7,7,8,8,7,8,7,8,7,8,7,8,7,7,8,7,8,7,8,7,8,7,8,7,8,7,7,8,7,8,7,8,7,8,7,8,7,8,7,
@@ -159,8 +159,9 @@
       let height = document.documentElement.clientHeight * 0.8;
       let width = document.documentElement.clientWidth;
       
-      let viewportSize = 400;
-      let viewport = new Viewport(200, 200, viewportSize, viewportSize, playerSpeed);
+      let viewportHeight = height * 0.9;
+      let viewportWidth = width * 0.6;
+      let viewport = new Viewport(200, 200, viewportWidth, viewportHeight, playerSpeed);
       let player = new Player(viewport.x + viewport.width * 0.5, viewport.y + viewport.height * 0.4, playerSpeed, 0, 0);
       let playerCenter = 0;
       let bugArr = [];
