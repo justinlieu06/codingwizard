@@ -7,54 +7,45 @@
     <title>Coding Wizard</title>
     <link rel="stylesheet" type="text/css" href="css/game.css" media="screen" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    //GAME ENTITIES
     <script src="js/player.js"></script>
     <script src="js/viewport.js"></script>
     <script src="js/bug.js"></script>
     <script src="js/fireball.js"></script>
-
   </head>
   <body>
-    <div class="icons">
+    <!-- <div class="icons">
       <a href="https://www.linkedin.com/in/justin-lieu-024744150/" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
       <a href="https://github.com/JustinLieu06/codingwizard" target="_blank"><i class="fa fa-github fa-2x"></i></a>
       <a href="https://angel.co/justin-lieu?public_profile=1" target="_blank"><i class="fa fa-angellist fa-2x"></i></a>
-    </div>
-    <br />
-    <h1>Coding Wizard</h1>
-    <br />    
+    </div> -->
     <div class="score">
-      <span>Lives:</span>
-      <span id="lives">4</span>
-      <span>Score:</span>
-      <span id="score">0</span>
-    </div>
-    
+        <span>Lives:</span>
+        <span id="lives">4</span>
+        <span>Score:</span>
+        <span id="score">0</span>
+      </div>
     <div class="gameCanvas"><canvas></canvas></div>
-    <div class="hover"><div class="hover-inner"><i class="fa fa-arrow-circle-down"></i> INSTRUCTIONS <i class="fa fa-arrow-circle-down"></i></div>
-    <div class="instructions">
-      <h3>Overview:</h3>
-      <hr />
-      <div id="inst">You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</div>
-      <h3>Controls:</h3>
-      <hr />
-      <div id="inst">Press WASD to move the wizard up, left, down, and right respectively.</div>
-      <br />
-      <div id="inst">Click to cast a fireball spell.</div>
-      <br />
-      <div id="inst">Your spell's direction are based off of where you click in relation to the wizard.</div>
-      <h3>Scoring:</h3>
-      <hr />
-      <div id="inst">Changing a tile increases the score.</div>
-      <br />
-      <div id="inst">Killing a bug increases the score</div>
-      <br />
-      <div id="inst">Having a bug reach you decreases the score and you lose a life. At 0 lives, the game ends</div>
-    </div>
-    </div>
 
     <div id="startWrapper">
+      <h1 id="title">Coding Wizard</h1>
+
+      <div class="hover"><div class="hover-inner"><i class="fa fa-arrow-circle-down"></i> INSTRUCTIONS <i class="fa fa-arrow-circle-down"></i></div>
+      <div class="instructions">
+        <h3>Overview:</h3>
+        <div id="inst">You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</div><br />
+        <h3>Controls:</h3>
+        <div id="inst">Press WASD to move the wizard up, left, down, and right respectively.</div><br />
+        <div id="inst">Click to cast a fireball spell.</div><br />
+        <div id="inst">Your spell's direction are based off of where you click in relation to the wizard.</div><br />
+        <h3>Scoring:</h3>
+        <div id="inst">Changing a tile increases the score.</div><br />
+        <div id="inst">Killing a bug increases the score</div><br />
+        <div id="inst">Having a bug reach you decreases the score and you lose a life. At 0 lives, the game ends</div>
+      </div>
+      </div>
+
       <button type="button" id="startBtn" onclick="loop()">Start</button>
+      
       <div id="gameOver">Game Over</div>
     </div>
 
@@ -66,22 +57,15 @@
       //SPRITES//////////////////////////////
       let tileSprites = new Image();
       tileSprites.src = "sprites/terrain2.png";
-
       let waterSprites = new Image();
       waterSprites.src = "sprites/watertiles.png";
-
       let wizardSprites = new Image();
       wizardSprites.src = "sprites/wizards.png";        
-
       let bugSprites = new Image();
       bugSprites.src = "sprites/bugs.png";  
-
       let fireballSprites = new Image();
       fireballSprites.src = "sprites/fireballs.png"
       ////////////////////////////////////////////
-
-
-
       let score = 0;
       let lives = 4;
       let scoreDiv = document.getElementById("score");
@@ -90,7 +74,6 @@
       let gameOver = document.getElementById("gameOver");
       gameOver.style.display = "none";
       let startWrapper = document.getElementById("startWrapper");
-
       let playerSpeed = 3;
       let scaledSize = 54;
       let spriteSize = 16;
@@ -146,7 +129,6 @@
                 8,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,8,
                 8,7,7,8,7,7,8,7,8,7,8,7,7,7,8,7,8,7,7,7,8,7,7,8,7,7,8,7,8,7,7,8,7,7,7,7,7,7,7,7,8,7,7,8,7,7,8,7,7,7]
                 
-
       // random map
       // let map = new Array(10000).fill(1).map(() => {
       //   return Math.floor(Math.random() * 3)
@@ -155,13 +137,12 @@
       let columns = Math.sqrt(map.length);
       let rows = Math.sqrt(map.length);
       let context = document.querySelector("canvas").getContext("2d");
-
-      let height = document.documentElement.clientHeight * 0.8;
+      let height = document.documentElement.clientHeight;
       let width = document.documentElement.clientWidth;
       
-      let viewportHeight = height * 0.9;
-      let viewportWidth = width * 0.6;
-      let viewport = new Viewport(200, 200, viewportWidth, viewportHeight, playerSpeed);
+      let viewportHeight = height;
+      let viewportWidth = width;
+      let viewport = new Viewport(500, 500, viewportWidth, viewportHeight, playerSpeed);
       let player = new Player(viewport.x + viewport.width * 0.5, viewport.y + viewport.height * 0.4, playerSpeed, 0, 0);
       let playerCenter = 0;
       let bugArr = [];
@@ -170,11 +151,9 @@
         y:0,
       };
       let fireballArr = [];
-
       //CENTER MAP: map x and y coordinates are set so map is centered based off of browser dimensions
       let mapXCoor = width * 0.5 - viewport.width * 0.5;
-      let mapYCoor = 50;
-
+      let mapYCoor = 0;
       // create bugs with random locations
       for (let i = 0; i < columns; i++){
         for (let j = 0; j < rows; j++){
@@ -189,9 +168,7 @@
           }
         }
       }
-
       //////////////////////////////////////////////////
-
       function respawnBug(){
         let xOrY = Math.floor(Math.random() * 2);
         let randI;
@@ -208,35 +185,22 @@
         
         let bugSpriteRand = Math.floor(Math.random() * 4);
         let bugSpeedRand = 0.4;
-
         bugArr.push(new Bug(tileXCoor, tileYCoor, bugSpeedRand, bugSpriteRand, 1, 1));
       }
-
-
-
-
       
-
-
-
-
       //LOOP////////////////////////
       let requestId;
-
       function loop(){
         requestId = undefined;
         start();
         // window.requestAnimationFrame(loop);
-
         startBtn.style.display = "none";
         startWrapper.style.display = "none";
-
         context.canvas.height = height;
         context.canvas.width = width;
         // context.fillStyle = "#008000";
         context.fillRect(0, 0, width, height);
         context.imageSmoothingEnabled = false;
-
         //MOVE ENTITIES//
         player.move();
         viewport.move();
@@ -248,19 +212,16 @@
         let topMapEdge = Math.floor(viewport.y / scaledSize);
         let rightMapEdge = Math.ceil((viewport.x + viewport.width) / scaledSize);
         let bottomMapEdge = Math.ceil((viewport.y + viewport.height) / scaledSize);
-
         let scaledLeftMapEdge = leftMapEdge * scaledSize - viewport.x + mapXCoor;
         let scaledTopMapEdge = topMapEdge * scaledSize - viewport.y + mapYCoor;
         let scaledRightMapEdge = rightMapEdge * scaledSize - viewport.x + mapXCoor;
         let scaledBottomMapEdge = bottomMapEdge * scaledSize - viewport.y + mapYCoor;
-
         //DRAW MAP//
         //prevent map from repeating
         if (leftMapEdge < 0) leftMapEdge = 0;
         if (topMapEdge < 0) topMapEdge = 0;
         if (rightMapEdge > columns) rightMapEdge = columns;
         if (bottomMapEdge > rows) bottomMapEdge = rows;
-
         for (let i = leftMapEdge; i < rightMapEdge; i++){
           for (let j = topMapEdge; j < bottomMapEdge; j++){
             let mapNumber = map[j * columns + i];
@@ -277,23 +238,18 @@
             }
           }
         }
-
-
         //ADD TO SCORE IF MAP TILE CHANGES//
         let playerXCenter = Math.floor((player.x + scaledSize * 0.5) / scaledSize);
         let playerYCenter = Math.floor((player.y + scaledSize * 0.5) / scaledSize) * columns;
         playerCenter = playerXCenter + playerYCenter;
-
         if (map[playerCenter] === 0) {
           map[playerCenter] = 1;
           score += 5;
           scoreDiv.innerHTML = score;
         }
-
         //DECREASE SCORE IF BUG HITS PLAYER//
         for (let i = 0; i < bugArr.length; i++){
           let currentBug = bugArr[i];
-
           let bugXCenter = Math.floor((currentBug.x + scaledSize * 0.5) / scaledSize);
           let bugYCenter = Math.floor((currentBug.y + scaledSize * 0.5) / scaledSize) * columns;
           
@@ -307,11 +263,9 @@
             respawnBug();
           }
         }
-
         //ADD TO SCORE IF FIREBALL KILLS BUG//
         for (let i = 0; i < bugArr.length; i++){
           let currentBug = bugArr[i];
-
           let bugXCenter = Math.floor((currentBug.x + scaledSize * 0.5) / scaledSize);
           let bugYCenter = Math.floor((currentBug.y + scaledSize * 0.5) / scaledSize) * columns;
         
@@ -329,7 +283,6 @@
               context.drawImage(fireballSprites, 2 * spriteSize, 0, spriteSize, 
                 spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
               fireballArr.splice(j, 1);
-
               // let soundFlag = true;
               // if (soundFlag){
               //   fireballArr.push(new Fireball(pointer.x, pointer.y, 2, 1));
@@ -348,17 +301,13 @@
         //DRAW PLAYER//
         let playerXCoor = Math.round(player.x - viewport.x + mapXCoor);
         let playerYCoor = Math.round(player.y - viewport.y + mapYCoor);
-
         context.drawImage(wizardSprites, player.spriteX * spriteSize, player.spriteY * spriteSize, spriteSize, spriteSize, playerXCoor, playerYCoor,
           scaledSize, scaledSize);
-
         //DRAW VIEWPORT//
-
         context.strokeStyle = "#ffffff";
         
         context.rect(mapXCoor, mapYCoor, viewport.width, viewport.height);
         context.stroke();
-
         //UPDATE AND DRAW BUGS
         for (let i = 0; i < bugArr.length; i++){
           let currentBug = bugArr[i];
@@ -372,7 +321,6 @@
           let bugY = Math.floor(currentBug.y);
           let playerX = Math.floor(playerXCoor);
           let playerY = Math.floor(playerYCoor);
-
           if (Math.floor(currentBug.x) < Math.floor(playerXCoor)){
             velX = 1;
             bugXDir = 1;
@@ -396,7 +344,6 @@
           else {
             velY = 0;
           }
-
           currentBug.update(bugXDir, bugYDir, velX, velY);
           
           if (currentBug.x > scaledLeftMapEdge && currentBug.x < scaledRightMapEdge && 
@@ -405,7 +352,6 @@
               scaledSize, scaledSize);
           }
         }
-
         //UPDATE AND DRAW FIREBALLS
         for (let i = 0; i < fireballArr.length; i++){
           let currentFireball = fireballArr[i];
@@ -419,7 +365,6 @@
           else {
             fireballXDir = 0;
           }
-
           if (currentFireball.y + (spriteSize * 0.5) < playerYCoor){
             fireballYDir = -1;
           }
@@ -429,7 +374,6 @@
           else {
             fireballYDir = 0;
           }
-
           if (fireballXDir === 0 && fireballYDir === 0){
             continue;
           }
@@ -443,11 +387,10 @@
           }
         }
         
-        context.clearRect(0, 0, width * 0.5 - (viewport.width * 0.5 + 1), height);
-        context.clearRect(width * 0.5 + (viewport.width * 0.5 + 1), 0, width, height);
-        context.clearRect(0, 0, width, 50 - 1);
-        context.clearRect(0, 50 + 1 + viewport.height, width, height);
-
+        // context.clearRect(0, 0, width * 0.5 - (viewport.width * 0.5 + 1), height);
+        // context.clearRect(width * 0.5 + (viewport.width * 0.5 + 1), 0, width, height);
+        // context.clearRect(0, 0, width, 0);
+        // context.clearRect(0, viewport.height, width, height);
         //Game Over
         if (lives <= 0){
           gameOver.style.display = "inline";
@@ -459,13 +402,11 @@
           stop();
         }
       }
-
       function start() {
         if (!requestId) {
           requestId = window.requestAnimationFrame(loop);
         }
       }
-
       function stop() {
         if (requestId) {
           window.cancelAnimationFrame(requestId);
@@ -473,14 +414,7 @@
         }
       }
       //////////////////////////////////////////////////
-
-
-
-
-
-
       //ADD KEY LISTENERS///////////////////////////////////
-
       window.addEventListener("keydown", player.keyListener);
       window.addEventListener("keyup", player.keyListener);
       window.addEventListener("keydown", viewport.keyListener);
@@ -490,16 +424,12 @@
         window.addEventListener("keyup", bugArr[i].keyListener);
       }
       
-
       //////////////////////////////////////////////////
-
-
       context.canvas.addEventListener("click", event => {
         pointer.x = event.pageX - (scaledSize * 0.5);
-        pointer.y = event.pageY - 143 - (scaledSize * 0.5);
+        pointer.y = event.pageY - (scaledSize * 0.5);
         fireballArr.push(new Fireball(pointer.x, pointer.y, 2, 1));
       })
-
     </script>
   </body>
 </html>
