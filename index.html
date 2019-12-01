@@ -19,8 +19,9 @@
       <span id="lives">4</span>
       <span>Score:</span>
       <span id="score">0</span>
-      <button onclick="stop()" id="pause">Pause</button>
-      <button onclick="end()" id="pause">Quit</button>
+      <button onclick="randommap()" class="gamebuttons">Randomize Map</button>
+      <button onclick="stop()" id="pause" class="gamebuttons">Pause</button>
+      <button onclick="end()" class="gamebuttons">Quit</button>
     </div>
     <div class="gameCanvas"><canvas></canvas></div>
 
@@ -136,16 +137,11 @@
                 7,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,3,0,3,0,0,0,3,0,0,0,0,0,5,5,5,5,5,5,5,5,4,4,4,4,0,4,4,4,4,4,7,
                 8,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,8,
                 8,7,7,8,7,7,8,7,8,7,8,7,7,7,8,7,8,7,7,7,8,7,7,8,7,7,8,7,8,7,7,8,7,7,7,7,7,7,7,7,8,7,7,8,7,7,8,7,7,7]
-                
-      // random map
-      // let map = new Array(10000).fill(1).map(() => {
-      //   return Math.floor(Math.random() * 3)
-      // });
       
       let columns = Math.sqrt(map.length);
       let rows = Math.sqrt(map.length);
       let context = document.querySelector("canvas").getContext("2d");
-      let height = document.documentElement.clientHeight;
+      let height = document.documentElement.clientHeight - 40;
       let width = document.documentElement.clientWidth;
       
       let viewportHeight = height;
@@ -445,6 +441,23 @@
         gameOverWrapper.style.display = "none";
         startWrapper.style.display="inline";
       }
+      function randommap(){
+        let rand;
+        for (let i = 0; i < map.length; i++){
+          rand = Math.floor(Math.random() * 36 + 1);
+          if (rand <= 20){
+            map[i] = 0;
+          } else if (rand <= 24){
+            map[i] = 2;
+          } else if (rand <= 28){
+            map[i] = 3;
+          } else if (rand <= 35){
+            map[i] = 10;
+          } else {
+            map[i] = 12;
+          }
+        }
+      }
       //////////////////////////////////////////////////
       //ADD KEY LISTENERS///////////////////////////////////
       window.addEventListener("keydown", player.keyListener);
@@ -459,7 +472,7 @@
       //////////////////////////////////////////////////
       context.canvas.addEventListener("click", event => {
         pointer.x = event.pageX - (scaledSize * 0.5);
-        pointer.y = event.pageY - 30 - (scaledSize * 0.5);
+        pointer.y = event.pageY - 40 - (scaledSize * 0.5);
         fireballArr.push(new Fireball(pointer.x, pointer.y, 2, 1));
       })
     </script>
