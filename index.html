@@ -15,10 +15,12 @@
   </head>
   <body onload="createAllBugs()">
     <div class="score">
-      <span>Lives:</span>
-      <span id="lives">4</span>
       <span>Score:</span>
       <span id="score">0</span>
+      <span>Mana:</span>
+      <span id="mana">30</span>
+      <span>Lives:</span>
+      <span id="lives">4</span>
       <button onclick="randommap()" class="gamebuttons">Randomize Map</button>
       <button onclick="stop()" id="pause" class="gamebuttons">Pause</button>
       <button onclick="end()" class="gamebuttons">Quit</button>
@@ -40,7 +42,8 @@
         <div id="inst">You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</div><br />
         <h3>Controls:</h3>
         <div id="inst">Press WASD to move the wizard up, left, down, and right respectively.</div><br />
-        <div id="inst">Click to cast a fireball spell.</div>
+        <div id="inst">Click to cast a fireball spell.</div><br />
+        <div id="inst">Press space to use special move</div>
       </div>
       </div>
       
@@ -75,8 +78,10 @@
       fireballSprites.src = "sprites/fireballs.png"
       ////////////////////////////////////////////
       let score = 0;
+      let mana = 30;
       let lives = 3;
       let scoreDiv = document.getElementById("score");
+      let manaDiv = document.getElementById("mana");
       let livesDiv = document.getElementById("lives");
       let startBtn = document.getElementById("startBtn");
       let gameOverWrapper = document.getElementById("gameOverWrapper");
@@ -150,7 +155,9 @@
 
       let fireballArr = [];
       let player = new Player(viewport.x + viewport.width * 0.5, viewport.y + viewport.height * 0.5, playerSpeed, 0, 0);
-      let playerCenter = 0;
+      let playerXCenter;
+      let playerYCenter;
+      let playerCenter;
       let bugArr = [];
       let pointer = { 
         x:0, 
@@ -245,13 +252,14 @@
           }
         }
         //ADD TO SCORE IF MAP TILE CHANGES//
-        let playerXCenter = Math.floor((player.x + scaledSize * 0.5) / scaledSize);
-        let playerYCenter = Math.floor((player.y + scaledSize * 0.5) / scaledSize) * columns;
+        playerXCenter = Math.floor((player.x + scaledSize * 0.5) / scaledSize);
+        playerYCenter = Math.floor((player.y + scaledSize * 0.5) / scaledSize) * columns;
         playerCenter = playerXCenter + playerYCenter;
         if (map[playerCenter] === 0) {
           map[playerCenter] = 1;
           score += 5;
-          scoreDiv.innerHTML = score;
+          mana += 1;
+          updateNav();
         }
         //DECREASE SCORE IF BUG HITS PLAYER//
         for (let i = 0; i < bugArr.length; i++){
@@ -261,9 +269,8 @@
           
           if (currentBug.velocityX === 0 && currentBug.velocityY === 0){
             score -= 10;
-            scoreDiv.innerHTML = score;
             lives -= 1;
-            livesDiv.innerHTML = lives;
+            updateNav();
             bugArr.splice(i, 1);
             //spawn new bug
             respawnBug();
@@ -284,7 +291,8 @@
               //kill bug
               bugArr.splice(i, 1);
               score += 2;
-              scoreDiv.innerHTML = score;
+              mana += 3;
+              updateNav();
               //remove fireball when it touches bug
               context.drawImage(fireballSprites, 2 * spriteSize, 0, spriteSize, 
                 spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
@@ -347,7 +355,6 @@
             velY = 0;
           }
           currentBug.update(bugXDir, bugYDir, velX, velY);
-          
           if (currentBug.x > scaledLeftMapEdge && currentBug.x < scaledRightMapEdge && 
             currentBug.y > scaledTopMapEdge && currentBug.y < scaledBottomMapEdge){
             context.drawImage(bugSprites, currentBug.bugSpriteNum * spriteSize, 0, spriteSize, spriteSize, currentBug.x, currentBug.y,
@@ -438,9 +445,9 @@
       }
       function reset(){
         lives = 3;
-        livesDiv.innerHTML = lives;
         score = 0;
-        scoreDiv.innerHTML = score;
+        mana = 30;
+        updateNav();
         gameOverWrapper.style.display = "none";
         document.getElementById("pause").innerHTML = "Pause";
         bugArr = [];
@@ -477,6 +484,11 @@
           }
         }
       }
+      function updateNav(){
+        scoreDiv.innerHTML = score;
+        manaDiv.innerHTML = mana;
+        livesDiv.innerHTML = lives;
+      }
       //////////////////////////////////////////////////
       //ADD KEY LISTENERS///////////////////////////////////
       window.addEventListener("keydown", player.keyListener);
@@ -489,11 +501,33 @@
       }
       
       //////////////////////////////////////////////////
-      context.canvas.addEventListener("click", event => {
-        pointer.x = event.pageX - (scaledSize * 0.5);
-        pointer.y = event.pageY - 40 - (scaledSize * 0.5);
-        let randFireballSprite = Math.floor(Math.random() * 4 + 1);
-        fireballArr.push(new Fireball(pointer.x, pointer.y, 2, randFireballSprite));
+      context.canvas.addEventListener('click', event => {
+        if (mana >= 2){
+          pointer.x = event.pageX - (scaledSize * 0.5);
+          pointer.y = event.pageY - 40 - (scaledSize * 0.5);
+          let randFireballSprite = Math.floor(Math.random() * 4 + 1);
+          fireballArr.push(new Fireball(pointer.x, pointer.y, 2, randFireballSprite));
+          mana -= 2;
+          updateNav();
+        }
+      })
+      document.addEventListener('keydown', event => {
+        if (event.keyCode === 32 || event.keyCode === 81 || event.keyCode === 69 || event.keyCode === 82){
+          let randFireballSprite = Math.floor(Math.random() * 4 + 1);
+          //top three
+          fireballArr.push(new Fireball(width/2, height/2 - 30, 2, randFireballSprite));
+          fireballArr.push(new Fireball(width/2 - 10, height/2 - 30, 2, randFireballSprite));
+          fireballArr.push(new Fireball(width/2 + 10, height/2 - 30, 2, randFireballSprite));
+          //bottom three
+          fireballArr.push(new Fireball(width/2, height/2 + 10, 2, randFireballSprite));
+          fireballArr.push(new Fireball(width/2 - 10, height/2 + 10, 2, randFireballSprite));
+          fireballArr.push(new Fireball(width/2 + 10, height/2 + 10, 2, randFireballSprite));
+          //sides
+          fireballArr.push(new Fireball(width/2 - 10, height/2 - 5, 2, randFireballSprite));
+          fireballArr.push(new Fireball(width/2 + 10, height/2 - 5, 2, randFireballSprite));
+          mana -= 8;
+          updateNav();
+        }
       })
     </script>
   </body>
