@@ -14,7 +14,7 @@
     <link rel="fav icon" type="image/jpg" href="images/favicon.png"/>
   </head>
   <body onload="createAllBugs()">
-    <div class="score">
+    <div class="topnav">
       <span>Score:</span>
       <span id="score">0</span>
       <span>Mana:</span>
@@ -26,6 +26,9 @@
       <button onclick="end()" class="gamebuttons">Quit</button>
     </div>
     <div class="gameCanvas"><canvas></canvas></div>
+    <div class="botnav">
+      <span><i class="fas fa-dragon"></i> Spirit says: </span><span id="dialogue">Good luck brave wizard!</span>
+    </div>
 
     <div id="startWrapper">
       <div class="icons">
@@ -80,10 +83,12 @@
       let score = 0;
       let mana = 30;
       let lives = 3;
+      let dialogue = "Good luck brave wizard!";
       let scoreDiv = document.getElementById("score");
       let manaDiv = document.getElementById("mana");
       let livesDiv = document.getElementById("lives");
       let startBtn = document.getElementById("startBtn");
+      let dialogueDiv = document.getElementById("dialogue");
       let gameOverWrapper = document.getElementById("gameOverWrapper");
       let hover = document.getElementById("hover");
       gameOverWrapper.style.display = "none";
@@ -146,7 +151,7 @@
       let columns = Math.sqrt(map.length);
       let rows = Math.sqrt(map.length);
       let context = document.querySelector("canvas").getContext("2d");
-      let height = document.documentElement.clientHeight - 40;
+      let height = document.documentElement.clientHeight - 80;
       let width = document.documentElement.clientWidth;
       
       let viewportHeight = height;
@@ -488,6 +493,7 @@
         scoreDiv.innerHTML = score;
         manaDiv.innerHTML = mana;
         livesDiv.innerHTML = lives;
+        dialogueDiv.innerHTML = dialogue;
       }
       //////////////////////////////////////////////////
       //ADD KEY LISTENERS///////////////////////////////////
@@ -508,25 +514,35 @@
           let randFireballSprite = Math.floor(Math.random() * 4 + 1);
           fireballArr.push(new Fireball(pointer.x, pointer.y, 2, randFireballSprite));
           mana -= 2;
+          dialogue = "Remember to have fun!";
+          updateNav();
+        } else {
+          dialogue = "Not enough mana for that spell";
           updateNav();
         }
       })
       document.addEventListener('keydown', event => {
         if (event.keyCode === 32 || event.keyCode === 81 || event.keyCode === 69 || event.keyCode === 82){
-          let randFireballSprite = Math.floor(Math.random() * 4 + 1);
-          //top three
-          fireballArr.push(new Fireball(width/2, height/2 - 30, 2, randFireballSprite));
-          fireballArr.push(new Fireball(width/2 - 10, height/2 - 30, 2, randFireballSprite));
-          fireballArr.push(new Fireball(width/2 + 10, height/2 - 30, 2, randFireballSprite));
-          //bottom three
-          fireballArr.push(new Fireball(width/2, height/2 + 10, 2, randFireballSprite));
-          fireballArr.push(new Fireball(width/2 - 10, height/2 + 10, 2, randFireballSprite));
-          fireballArr.push(new Fireball(width/2 + 10, height/2 + 10, 2, randFireballSprite));
-          //sides
-          fireballArr.push(new Fireball(width/2 - 10, height/2 - 5, 2, randFireballSprite));
-          fireballArr.push(new Fireball(width/2 + 10, height/2 - 5, 2, randFireballSprite));
-          mana -= 8;
-          updateNav();
+          if (mana >= 8){
+            let randFireballSprite = Math.floor(Math.random() * 4 + 1);
+            //top three
+            fireballArr.push(new Fireball(width/2, height/2 - 30, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2 - 10, height/2 - 30, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2 + 10, height/2 - 30, 2, randFireballSprite));
+            //bottom three
+            fireballArr.push(new Fireball(width/2, height/2 + 10, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2 - 10, height/2 + 10, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2 + 10, height/2 + 10, 2, randFireballSprite));
+            //sides
+            fireballArr.push(new Fireball(width/2 - 10, height/2 - 5, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2 + 10, height/2 - 5, 2, randFireballSprite));
+            mana -= 8;
+            dialogue = "Remember to have fun!"
+            updateNav();
+          } else {
+            dialogue = "Not enough mana for that spell";
+            updateNav();
+          }
         }
       })
     </script>

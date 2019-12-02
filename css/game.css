@@ -26,7 +26,7 @@ li, p {
   list-style-type: none;
 }
 
-.fa-github, .fa-linkedin, .fa-angellist, .fa-arrow-circle-down {
+.fa-github, .fa-linkedin, .fa-angellist, .fa-arrow-circle-down, .fa-dragon {
   color: white;
 }
 
@@ -38,8 +38,15 @@ li, p {
   padding-top: 20px;
 }
 
-.score {
-  width: 40%;
+.topnav {
+  width: 90%;
+  margin: auto;
+  font-size: 25px;
+  height: 40px;
+}
+
+.botnav{
+  width: 90%;
   margin: auto;
   font-size: 25px;
   height: 40px;
