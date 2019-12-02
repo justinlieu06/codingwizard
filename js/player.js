@@ -1,5 +1,5 @@
 class Player {
-  constructor(x, y, speed, spriteX, spriteY){
+  constructor(x, y, speed, spriteX, spriteY, fireballArr){
     this.x = x;
     this.y = y;
     this.speed = speed;

@@ -147,6 +147,8 @@
       let viewportHeight = height;
       let viewportWidth = width;
       let viewport = new Viewport(500, 500, viewportWidth, viewportHeight, playerSpeed);
+
+      let fireballArr = [];
       let player = new Player(viewport.x + viewport.width * 0.5, viewport.y + viewport.height * 0.5, playerSpeed, 0, 0);
       let playerCenter = 0;
       let bugArr = [];
@@ -154,7 +156,6 @@
         x:0, 
         y:0,
       };
-      let fireballArr = [];
       //CENTER MAP: map x and y coordinates are set so map is centered based off of browser dimensions
       let mapXCoor = width * 0.5 - viewport.width * 0.5;
       let mapYCoor = 0;
@@ -381,8 +382,26 @@
           currentFireball.update(fireballXDir, fireballYDir);
           if (currentFireball.x > scaledLeftMapEdge && currentFireball.x < scaledRightMapEdge && 
             currentFireball.y > scaledTopMapEdge && currentFireball.y < scaledBottomMapEdge){
-            context.drawImage(fireballSprites, currentFireball.fireballSpriteNum * spriteSize, 0, spriteSize, 
-             spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
+            //draw red fireball
+            if (currentFireball.fireballSpriteNum === 1){
+              context.drawImage(fireballSprites, 16, 0, spriteSize, 
+              spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
+            } 
+            //draw purple fireball
+            else if (currentFireball.fireballSpriteNum === 2){
+              context.drawImage(fireballSprites, 64, 0, spriteSize, 
+              spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
+            }
+            //draw blue fireball
+            else if (currentFireball.fireballSpriteNum === 3){
+              context.drawImage(fireballSprites, 112, 0, spriteSize, 
+              spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
+            }
+            //draw green fireball
+            else {
+              context.drawImage(fireballSprites, 160, 0, spriteSize, 
+              spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
+            }
           } else {
             fireballArr.splice(i, 1);
           }
@@ -473,7 +492,8 @@
       context.canvas.addEventListener("click", event => {
         pointer.x = event.pageX - (scaledSize * 0.5);
         pointer.y = event.pageY - 40 - (scaledSize * 0.5);
-        fireballArr.push(new Fireball(pointer.x, pointer.y, 2, 1));
+        let randFireballSprite = Math.floor(Math.random() * 4 + 1);
+        fireballArr.push(new Fireball(pointer.x, pointer.y, 2, randFireballSprite));
       })
     </script>
   </body>
