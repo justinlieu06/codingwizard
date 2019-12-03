@@ -68,8 +68,6 @@
     <audio src="sounds/fireball.mp3" id="fireballSound"></audio>
 
     <script type = "text/javascript">
-      //SOUNDS///////////////////////////////
-      // let fireballSound = document.getElementById(fireballSound);
       //SPRITES//////////////////////////////
       let tileSprites = new Image();
       tileSprites.src = "sprites/terrain2.png";
@@ -305,15 +303,6 @@
               context.drawImage(fireballSprites, 2 * spriteSize, 0, spriteSize, 
                 spriteSize, currentFireball.x, currentFireball.y, scaledSize, scaledSize);
               fireballArr.splice(j, 1);
-              // let soundFlag = true;
-              // if (soundFlag){
-              //   fireballArr.push(new Fireball(pointer.x, pointer.y, 2, 1));
-              //   fireballSound.pause();
-              //   fireballSound.currentTime = 0;
-              //   fireballSound.play();
-              //   soundFlag = false;
-              // }
-              //spawn new bug
               respawnBug();
             }
           }
