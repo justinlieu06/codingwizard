@@ -7,6 +7,7 @@ body {
   height:100%; 
   position:relative; 
   width:100%;
+  overflow: hidden;
 }
 
 canvas { 
@@ -42,6 +43,7 @@ li, p {
   width: 90%;
   margin: auto;
   font-size: 25px;
+  padding-top: 5px;
   height: 40px;
 }
 
@@ -49,6 +51,7 @@ li, p {
   width: 90%;
   margin: auto;
   font-size: 25px;
+  padding-bot: 5px;
   height: 40px;
 }
 
@@ -165,7 +168,7 @@ li, p {
 
 .hover {
   top: 45%;
-  left: calc(50% - 90px);
+  left: calc(50% - 87.5px);
   position: absolute;
   width: 175px;
 }

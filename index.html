@@ -14,20 +14,22 @@
     <link rel="fav icon" type="image/jpg" href="images/favicon.png"/>
   </head>
   <body onload="createAllBugs()">
-    <div class="topnav">
-      <span>Score:</span>
-      <span id="score">0</span>
-      <span>Mana:</span>
-      <span id="mana">30</span>
-      <span>Lives:</span>
-      <span id="lives">4</span>
-      <button onclick="randommap()" class="gamebuttons">Randomize Map</button>
-      <button onclick="stop()" id="pause" class="gamebuttons">Pause</button>
-      <button onclick="end()" class="gamebuttons">Quit</button>
-    </div>
-    <div class="gameCanvas"><canvas></canvas></div>
-    <div class="botnav">
-      <span><i class="fas fa-dragon"></i> Spirit says: </span><span id="dialogue">Good luck brave wizard!</span>
+    <div gameWrapper>
+      <div class="topnav">
+        <span>Score:</span>
+        <span id="score">0</span>
+        <span>Mana:</span>
+        <span id="mana">30</span>
+        <span>Lives:</span>
+        <span id="lives">4</span>
+        <button onclick="randommap()" class="gamebuttons">Randomize Map</button>
+        <button onclick="stop()" id="pause" class="gamebuttons">Pause</button>
+        <button onclick="end()" class="gamebuttons">Quit</button>
+      </div>
+      <div class="gameCanvas"><canvas></canvas></div>
+      <div class="botnav">
+        <span><i class="fas fa-dragon"></i> Spirit says: </span><span id="dialogue"></span>
+      </div>
     </div>
 
     <div id="startWrapper">
@@ -44,9 +46,9 @@
         <h3>Overview:</h3>
         <div id="inst">You are playing as a coding wizard who casts powerful programming magic to defeat the bugs in your developed universe.</div><br />
         <h3>Controls:</h3>
-        <div id="inst">Press WASD to move the wizard up, left, down, and right respectively.</div><br />
+        <div id="inst">Press the w, a, s, and d keys to move the wizard up, left, down, and right respectively.</div><br />
         <div id="inst">Click to cast a fireball spell.</div><br />
-        <div id="inst">Press space to use special move</div>
+        <div id="inst">Press r to use special move</div>
       </div>
       </div>
       
@@ -159,6 +161,7 @@
       let viewport = new Viewport(500, 500, viewportWidth, viewportHeight, playerSpeed);
 
       let fireballArr = [];
+      let randFireballSprite = 0;
       let player = new Player(viewport.x + viewport.width * 0.5, viewport.y + viewport.height * 0.5, playerSpeed, 0, 0);
       let playerXCenter;
       let playerYCenter;
@@ -418,6 +421,10 @@
             fireballArr.splice(i, 1);
           }
         }
+
+        for (let i = 0; i < fireballArr.length; i++){
+          fireballArr[i].move();
+        }
         
         // context.clearRect(0, 0, width * 0.5 - (viewport.width * 0.5 + 1), height);
         // context.clearRect(width * 0.5 + (viewport.width * 0.5 + 1), 0, width, height);
@@ -511,36 +518,36 @@
         if (mana >= 2){
           pointer.x = event.pageX - (scaledSize * 0.5);
           pointer.y = event.pageY - 40 - (scaledSize * 0.5);
-          let randFireballSprite = Math.floor(Math.random() * 4 + 1);
-          fireballArr.push(new Fireball(pointer.x, pointer.y, 2, randFireballSprite));
+          randFireballSprite++;
+          fireballArr.push(new Fireball(pointer.x, pointer.y, 6, randFireballSprite % 4, playerSpeed));
           mana -= 2;
-          dialogue = "Remember to have fun!";
+          dialogue = "Press r to use your special spell!";
           updateNav();
         } else {
-          dialogue = "Not enough mana for that spell";
+          dialogue = "Not enough mana for single spell!";
           updateNav();
         }
       })
       document.addEventListener('keydown', event => {
-        if (event.keyCode === 32 || event.keyCode === 81 || event.keyCode === 69 || event.keyCode === 82){
+        if (event.keyCode === 81 || event.keyCode === 69 || event.keyCode === 82){
           if (mana >= 8){
-            let randFireballSprite = Math.floor(Math.random() * 4 + 1);
+            randFireballSprite++;
             //top three
-            fireballArr.push(new Fireball(width/2, height/2 - 30, 2, randFireballSprite));
-            fireballArr.push(new Fireball(width/2 - 10, height/2 - 30, 2, randFireballSprite));
-            fireballArr.push(new Fireball(width/2 + 10, height/2 - 30, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2, height/2 - 40, 6, randFireballSprite % 4, playerSpeed));
+            fireballArr.push(new Fireball(width/2 - 20, height/2 - 40, 6, randFireballSprite % 4, playerSpeed));
+            fireballArr.push(new Fireball(width/2 + 20, height/2 - 40, 6, randFireballSprite % 4, playerSpeed));
             //bottom three
-            fireballArr.push(new Fireball(width/2, height/2 + 10, 2, randFireballSprite));
-            fireballArr.push(new Fireball(width/2 - 10, height/2 + 10, 2, randFireballSprite));
-            fireballArr.push(new Fireball(width/2 + 10, height/2 + 10, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2, height/2 + 20, 6, randFireballSprite % 4, playerSpeed));
+            fireballArr.push(new Fireball(width/2 - 20, height/2 + 20, 6, randFireballSprite % 4, playerSpeed));
+            fireballArr.push(new Fireball(width/2 + 20, height/2 + 20, 6, randFireballSprite % 4, playerSpeed));
             //sides
-            fireballArr.push(new Fireball(width/2 - 10, height/2 - 5, 2, randFireballSprite));
-            fireballArr.push(new Fireball(width/2 + 10, height/2 - 5, 2, randFireballSprite));
+            fireballArr.push(new Fireball(width/2 - 20, height/2 - 5, 6, randFireballSprite % 4, playerSpeed));
+            fireballArr.push(new Fireball(width/2 + 20, height/2 - 5, 6, randFireballSprite % 4, playerSpeed));
             mana -= 8;
-            dialogue = "Remember to have fun!"
+            dialogue = "Click to cast a single spell!"
             updateNav();
           } else {
-            dialogue = "Not enough mana for that spell";
+            dialogue = "Not enough mana for special spell!";
             updateNav();
           }
         }

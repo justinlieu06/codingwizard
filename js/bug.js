@@ -13,36 +13,17 @@ class Bug {
     this.playerSpeed = playerSpeed;
   }
 
-  keyListener(e){
-    let key_state = event.type === "keydown" ? true : false;
-    if (e.key === 'w'){
-      this.up = key_state;
-    }
-    if (e.key === 's'){
-      this.down = key_state;
-      
-    }
-    if (e.key === 'a'){
-      this.left = key_state;
-      
-    }
-    if (e.key === 'd'){
-      this.right = key_state;
-      
-    }
-  }
-
   move(){
-    if (viewport.up) {
+    if (player.up) {
       this.y += this.playerSpeed;
     }
-    if (viewport.down) {
+    if (player.down) {
       this.y -= this.playerSpeed;
     }
-    if (viewport.left){
+    if (player.left){
       this.x += this.playerSpeed;
     }
-    if (viewport.right){
+    if (player.right){
       this.x -= this.playerSpeed;
     }
   }
