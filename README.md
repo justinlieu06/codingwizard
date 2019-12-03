@@ -22,15 +22,15 @@ of the viewport.
 ### Enemies
 The map initially spawns evil bugs on random locations of the map. Upon killing a bug, the bug will respawn in a
 random part of the map's edge. The bugs will always travel the fastest route towards the player. Upon touching the
-player, the bug will despawn, but the player's score will decrease and the player will lose a life.
+player, the bug will despawn, but the player's score will decrease and the player will lose a life. The bug sprite and speed are selected at random.
 
 ### Fireball
 The player can cast fireballs by clicking on the map. The fireball's trajectory is based off of where the player clicks
 in relation to their character sprite. The fireball will move away from the player sprite until it hits the edge of the
-viewport where it will be destroyed or until it hits a bug where it will destroy the bug and increment the player's score. Fireballs require a certain amount of mana to be casted.
+viewport where it will be destroyed or until it hits a bug where it will destroy the bug and increment the player's score. Fireballs require a certain amount of mana to be casted. The fireballs will go through a range of colors.
 
 ### Special Spell
-The player can cast a spell that attacks in all directions, but costs significant mana.
+The player can cast a spell that attacks in all directions, but costs significant mana. This spell goes through a range of colors.
 
 ### Trail
 As the coding wizard moves around the map, he leaves a trail based off of where he has traveled. For each tile the wizard
