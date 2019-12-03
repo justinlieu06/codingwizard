@@ -5,7 +5,7 @@
 Coding Wizard is a 16 bit 2d tile-based role player game made entirely from scratch in vanilla JavaScript, HTML5, and CSS3. 
 The user plays as a coding wizard that can cast spells to defeat evil bugs in the developed universe.
 
-<img src="read_me_imgs/gameplay.gif" >
+<img src="read_me_imgs/gameplay2.gif" >
 
 [Check Out the Live Site Here!](https://justinlieu06.github.io/codingwizard/)
 
@@ -13,7 +13,6 @@ The user plays as a coding wizard that can cast spells to defeat evil bugs in th
 The game allows the player to move around in the viewport, and destroy bugs via using spells that are casted by clicking.
 Bugs respawn on a random part of the map's edge.
 Scoring is based off of how the player interacts with the world.
-
 
 ### Viewport
 The map and game entities are contained inside a viewport which moves with the player. The player sprite is unable
@@ -28,16 +27,28 @@ player, the bug will despawn, but the player's score will decrease and the playe
 ### Fireball
 The player can cast fireballs by clicking on the map. The fireball's trajectory is based off of where the player clicks
 in relation to their character sprite. The fireball will move away from the player sprite until it hits the edge of the
-viewport where it will be destroyed or until it hits a bug where it will destroy the bug and increment the player's score.
+viewport where it will be destroyed or until it hits a bug where it will destroy the bug and increment the player's score. Fireballs require a certain amount of mana to be casted.
+
+### Special Spell
+The player can cast a spell that attacks in all directions, but costs significant mana.
 
 ### Trail
 As the coding wizard moves around the map, he leaves a trail based off of where he has traveled. For each tile the wizard
-moves, the player's score is incremented, and the map adds more to the trail.
+moves, the player's score and mana is incremented, and the map adds more to the trail.
+
+### Random Map
+The player can change the map to a randomly, unique generated map.
+
+<img src="read_me_imgs/randommize.gif" >
+
+### Pause/Resume/Quit/Menu
+The player can pause and resume the game. The player can also quit at any time, and return to the menu.
 
 ### Start / Game Over Screen
 The game begins upon pressing the start button. When the player reaches 0 lives, the game ends, and the game over screen will pop up.
 
-<img src="read_me_imgs/gameover.png" >
+<img src="read_me_imgs/start.png" >
+<img src="read_me_imgs/gameover2.png" >
 
 ## Code Snippets
 
