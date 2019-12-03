@@ -12,6 +12,7 @@ class Player {
   }
 
   keyListener(e){
+    e.preventDefault();
     let key_state = event.type === "keydown" ? true : false;
     if (e.key === 'w'){
       player.up = key_state;

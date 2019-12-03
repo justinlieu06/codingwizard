@@ -22,9 +22,9 @@
         <span id="mana">30</span>
         <span>Lives:</span>
         <span id="lives">4</span>
-        <button onclick="randommap()" class="gamebuttons">Randomize Map</button>
-        <button onclick="stop()" id="pause" class="gamebuttons">Pause</button>
-        <button onclick="end()" class="gamebuttons">Quit</button>
+        <button onclick="randommap()" class="gamebuttons" type="reset">Randomize Map</button>
+        <button onclick="stop()" id="pause" class="gamebuttons" type="text">Pause</button>
+        <button onclick="end()" class="gamebuttons" type="text">Quit</button>
       </div>
       <div class="gameCanvas"><canvas></canvas></div>
       <div class="botnav">
@@ -48,7 +48,7 @@
         <h3>Controls:</h3>
         <div id="inst">Press the w, a, s, and d keys to move the wizard up, left, down, and right respectively.</div><br />
         <div id="inst">Click to cast a fireball spell.</div><br />
-        <div id="inst">Press r to use special move</div>
+        <div id="inst">Press space to use special move</div>
       </div>
       </div>
       
@@ -183,7 +183,7 @@
             let tileYCoor = Math.floor(j * scaledSize - viewport.y + mapYCoor);
             let rand = Math.floor(Math.random() * 80);
             let bugSpriteRand = Math.floor(Math.random() * 4);
-            let bugSpeedRand = Math.random() / 1.8 + 0.3;
+            let bugSpeedRand = Math.random() / 1.8 + 0.6;
             if (rand === 1){
               bugArr.push(new Bug(tileXCoor, tileYCoor, bugSpeedRand, bugSpriteRand, playerSpeed, 1, 1));
             }
@@ -521,7 +521,7 @@
           randFireballSprite++;
           fireballArr.push(new Fireball(pointer.x, pointer.y, 6, randFireballSprite % 4, playerSpeed));
           mana -= 2;
-          dialogue = "Press r to use your special spell!";
+          dialogue = "Press space to use your special spell!";
           updateNav();
         } else {
           dialogue = "Not enough mana for single spell!";
@@ -529,7 +529,8 @@
         }
       })
       document.addEventListener('keydown', event => {
-        if (event.keyCode === 81 || event.keyCode === 69 || event.keyCode === 82){
+        if (event.keyCode === 32 || event.keyCode === 81 || event.keyCode === 69 || event.keyCode === 82){
+          event.preventDefault();
           if (mana >= 8){
             randFireballSprite++;
             //top three
