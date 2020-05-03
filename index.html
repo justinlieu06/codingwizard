@@ -33,6 +33,11 @@
     </div>
 
     <div id="startWrapper">
+        <div class="outer">
+      
+            <div class="inner"></div>
+      
+          </div>
       <div class="icons">
         <a href="https://www.linkedin.com/in/justin-lieu-024744150/" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
         <a href="https://github.com/JustinLieu06/codingwizard" target="_blank"><i class="fa fa-github fa-2x"></i></a>
@@ -313,7 +318,7 @@
         playerXCenter = Math.floor((player.x + scaledSize * 0.5) / scaledSize);
         playerYCenter = Math.floor((player.y + scaledSize * 0.5) / scaledSize) * columns;
         playerCenter = playerXCenter + playerYCenter;
-        if (map[playerCenter] === 0) {
+        if (map[playerCenter] === 0 || map[playerCenter] === 2 || map[playerCenter] === 3) {
           map[playerCenter] = 1;
           score += 5;
           mana += 1;

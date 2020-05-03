@@ -233,3 +233,17 @@ li, p {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+
+/* .outer {
+  background-color: grey;
+  display: flex;
+  height: 200px;
+  width: 200px;
+  justify-content: center;
+}
+
+.inner {
+  background-color: blue;
+  height: 100px;
+  width: 100px;
+} */
