@@ -5,9 +5,9 @@
 
     <!--Thumbnail-->
     <meta property="fb:app_id" content="218454484887931"/>
-    <meta property="og:image" content="read_me_imgs/thumbnail.png" link rel="image_src" type="image/png" href="read_me_imgs/thumbnail.png" />
+    <meta property="og:image" content="https://justinlieu06.github.io/codingwizard/img/thumbnail.jpg" link rel="image_src" type="image/jpeg" href="http://justinlieu06.github.io/codingwizard/img/thumbnail.jpg" />
     <?php if ( has_post_thumbnail() ) { ?>
-    <meta property="og:image" content="<?php echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>" link rel="image_src" type="image/png" href="<?php echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>" />
+	  <meta property="og:image" content="<?php echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>" link rel="image_src" type="image/jpeg" href="<?php echo wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>" />
     <?php }
     else { } ?>
     <meta property="og:title" content="Coding Wizard" />
@@ -26,7 +26,7 @@
     <script src="js/viewport.js"></script>
     <script src="js/bug.js"></script>
     <script src="js/fireball.js"></script>
-    <link rel="fav icon" type="image/jpg" href="images/favicon.png"/>
+    <link rel="fav icon" type="image/jpg" href="img/favicon.png"/>
   </head>
   <body onload="createAllBugs()">
     <div gameWrapper>
